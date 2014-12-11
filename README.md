@@ -1,5 +1,5 @@
-panther
-=======
+This project is based on panther:
+=================================
 
 # Platform for Analysis of Cancer Therapy
 
