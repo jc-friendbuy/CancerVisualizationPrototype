@@ -4,7 +4,7 @@ source('src/data/db.R')
 ExpressionMixedGaussianModel <- function() {
   data <- GetAll()
   mix <- normalmixEM(data$quantileNormalizedRMAExpression)
-  
+
   list(
     list(
       graph.type = 'plot',

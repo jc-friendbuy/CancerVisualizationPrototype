@@ -1,8 +1,12 @@
-source('src/analysis/basic.R')
+# This file allows for configuring visualizations, basically matching names to
+# functions which can display graphs on the front end.
+
 source('src/analysis/correlation.R')
 source('src/analysis/genomic_location.R')
 source('src/analysis/expression_mixed_modeling.R')
 
+# This list / hash table maps names to visualization functions and allows one of
+# the visualizations to be selected via an index.
 visualization.list <- list(
   '--' = '',
   'Correlation Histogram' = CorrelationHistogram,
@@ -13,6 +17,9 @@ visualization.list <- list(
   'Expression mixed modeling' = ExpressionMixedGaussianModel
 )
 
+# Return a list of items contained in the visualization list above (note R
+# lists work like hash tables, so it is basically an index for which
+# visualization function to run based on a selection).
 GetVisualizationFunctionChoices <- function() {
   vis.names <- names(visualization.list)
   result <- list()

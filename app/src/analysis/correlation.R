@@ -1,19 +1,26 @@
+# Correlation visualizations.  These correlate gene copy number with gene
+# expression.
+
 source('src/data/db.R')
 library(shiny)
 
+# Calculate all the correlations, segmenting the data by gene.
 CorrelationsByGene <- function() {
   ApplyByGene(function(data, gene.label) {
     cor(data$quantileNormalizedRMAExpression, data$snpCopyNumber2Log2)
   })
 }
 
+# Get the correlation for a specific gene.
 CorrelationForGene <- function(symbol) {
   ApplyForGene(symbol, function(data, gene.label) {
     cor(data$quantileNormalizedRMAExpression, data$snpCopyNumber2Log2)
   })[[symbol]]
 }
 
-CorrelationHistogram <- function(data) {
+# Generate a histogram of the correlation values between copy number and
+# gene expression over all genes, over all cell lines.
+CorrelationHistogram <- function() {
   correlations.by.gene <- CorrelationsByGene()
   list(
     list(
@@ -28,6 +35,7 @@ CorrelationHistogram <- function(data) {
   )
 }
 
+# Generate linear fit graphs for a selection of genes, based on the symbol.
 CorrelationFits <- function() {
   selected.gene.symbols <- c('BEND7', 'ORAOV1', 'PLD5')
   lapply(selected.gene.symbols, function(gene.symbol) {
@@ -57,6 +65,9 @@ CorrelationFits <- function() {
   })
 }
 
+# Generate a dual plot of CopyNumber and GeneExpression data for selected
+# genes, in order to analyze whether changes in the first are reflected in the
+# second according to the Central Dogma of Biology.
 SideBySideCNAndGE <- function() {
   selected.gene.symbols <- c('BEND7', 'ORAOV1', 'PLD5')
   lapply(selected.gene.symbols, function(gene.symbol) {

@@ -1,3 +1,5 @@
+# This simple script will install the packages required to run the project.
+
 package.list <- c(
   'reshape2',
   'rgl',
@@ -7,5 +9,5 @@ package.list <- c(
   )
 install.packages(package.list)
 
-print('Asegúrese de que el directorio de trabajo esté establecido al directorio `app` (por ejemplo: setwd("~/Projects/panther/app/")')
-print('Luego, para correr el programa, debe ejecutar `source("server.R")` y luego `shiny::runApp()`')
+print('Make sure the working directory points to the `app` directory (for instance: setwd("~/Projects/panther/app/")')
+print('Then, run `source("server.R")` followed by `shiny::runApp()`')
