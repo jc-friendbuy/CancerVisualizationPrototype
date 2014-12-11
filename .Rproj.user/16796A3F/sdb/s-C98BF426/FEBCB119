@@ -1,0 +1,16 @@
+{
+    "contents" : "# Main server script.  This script starts the shiny web server, configures the\n# visualization options so that the appropriate rendering functions can be\n# selected for each visualization and waits for user input.\n\nlibrary(shiny)\nlibrary(shinyRGL)\nsource('visualization_config.R')\n\n# Start the main Web server loop, and render the UI components where the\n# visualizations will be rendered.\nshinyServer(function(input, output) {\n\n  output$visualization.output <- renderUI({\n\n    computed.visualizations <- ExecuteVisualization(\n      input$visualization.select\n    )\n\n    lapply(computed.visualizations, function(visualization) {\n      render.function <- SelectRenderingFunction(visualization$graph.type)\n      render.function(visualization$visualization())\n    })\n  })\n})\n\n# Return a rendering function for each of the visualization functions, in order\n# to render the correct content depending on the required visualization.\nSelectRenderingFunction <- function(visualization.function) {\n  switch(visualization.function,\n    plot = renderPlot,\n    hist = renderPlot,\n    plot3d = renderWebGL,\n    h3 = h3\n  )\n}\n\n# Run the selected visualization function and return its results, so they can\n# be rendered.\nExecuteVisualization <- function(visualization) {\n  visualization.index <- as.integer(visualization)\n  if (visualization.index > 1) {\n    visualization.to.execute <- visualization.list[[visualization.index]]\n    visualization.to.execute()\n  }\n}\n",
+    "created" : 1418269136982.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "479944626",
+    "id" : "FEBCB119",
+    "lastKnownWriteTime" : 1418267258,
+    "path" : "~/Projects/CancerVisualizationPrototype/app/server.R",
+    "project_path" : "app/server.R",
+    "properties" : {
+    },
+    "source_on_save" : false,
+    "type" : "r_source"
+}
